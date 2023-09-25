@@ -1,46 +1,64 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { useForm, Controller } from "react-hook-form";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { format } from "date-fns";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
-  const [data, setData] = useState({});
-  const [date, setDate] = useState(new Date());
+  const today = new Date(Date.now()).toISOString().slice(0, 10);
 
-  const fetchData = useCallback(async () => {
-    const res = await fetch(
-      `https://api.nasa.gov/planetary/apod?api_key=${
-        import.meta.env.VITE_API
-      }&date=2014-10-01`
-    );
-    const data = await res.json();
-    setData(data);
-  });
+  const [date, setDate] = useState(today);
+  const [apodData, setApodData] = useState(null);
+  const [marsData, setMarsData] = useState(null);
 
   useEffect(() => {
-    console.log(data);
-    console.log(date);
-    /* const newDate = format(date, "dd/MM/YYYY");
-    console.log(newDate); */
-  }, [fetchData]);
+    const apodFetch = async () => {
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_NASA_URL}/planetary/apod?api_key=${
+            import.meta.env.VITE_API
+          }&date=${date}`
+        );
+        const data = await res.json();
+        setApodData(data);
+        console.log(data);
+      } catch (error) {
+        console.error("Not able to fetch APOD data", error);
+      }
+    };
+    apodFetch();
 
-  const onSubmit = (data) => alert(JSON.stringify(data));
+    const marsFetch = async () => {
+      try {
+        const res = await fetch(
+          `${
+            import.meta.env.VITE_NASA_URL
+          }/mars-photos/api/v1/rovers/curiosity/photos?api_key=${
+            import.meta.env.VITE_API
+          }&earth_date=${date}`
+        );
+        const data = await res.json();
+        setMarsData(data);
+        console.log(data.photos[0]);
+      } catch (error) {
+        console.error("Not able to fetch APOD data", error);
+      }
+    };
+    marsFetch();
+  }, [date]);
+
+  const handleInput = (ev) => {
+    setDate(ev.target.value);
+  };
 
   return (
     <>
       <h1>Hello World</h1>
       <form action="">
-        <DatePicker
-          type="date"
-          dateFormat="yyyy/MM/dd"
-          selected={date}
-          onChange={(date) => setDate(date.format("y-MM-dd"))}
-        />
+        <input type="date" value={date} onChange={handleInput} />
+        <br />
+        <select name="planet-select" id="planet-select">
+          <option value="apod">APOD</option>
+          <option value="mars">MARS</option>
+        </select>
       </form>
-      <br />
-      <button onClick={fetchData}>Fetch</button>
     </>
   );
 }
