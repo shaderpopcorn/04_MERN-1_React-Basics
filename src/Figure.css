@@ -2,13 +2,33 @@
   width: 700px !important;
 }
 
+.figure h2 {
+  text-decoration: underline;
+}
+
+.image {
+  border: 1px solid rgba(255, 255, 255, 1);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
 .image-info {
   margin: 1rem 0;
   display: flex;
   justify-content: space-between;
   border: 1px solid rgba(255, 255, 255, 1);
+  border-radius: 1rem;
 }
 
 .image-info p {
+  padding: 0rem 1.5rem;
+}
+
+.explanation {
+  border: 1px solid rgba(255, 255, 255, 1);
+  border-radius: 1rem;
+}
+
+.explanation p {
   padding: 0rem 1.5rem;
 }

@@ -60,17 +60,35 @@ function App() {
   return (
     <>
       <h1>Astronomical Picture of the Day</h1>
-      <form action="">
-        <input type="date" value={date} max={today} onChange={handleInput} />
-        <br />
-        <select name="planet-select" id="planet-select" onInput={handleSelect}>
-          <option selected="selected" value="apod">
-            APOD
-          </option>
-          <option value="mars">MARS</option>
-        </select>
+      <form className="form-container">
+        <div>
+          <label htmlFor="dateInput">Select date:</label>
+          <input
+            name="dateInput"
+            className="date-input"
+            type="date"
+            value={date}
+            max={today}
+            onChange={handleInput}
+          />
+        </div>
+        <div>
+          <label htmlFor="planetSelect">Select API:</label>
+          <select
+            name="planetSelect"
+            className="planet-select"
+            onInput={handleSelect}
+          >
+            <option selected="selected" value="apod">
+              APOD
+            </option>
+            <option value="mars">MARS</option>
+          </select>
+        </div>
       </form>
-      <p>This image corresponds to the date: {date}</p>
+      <p>
+        The following image corresponds to the date: <strong> {date}</strong>
+      </p>
       {apodData && <ApodFigure apodData={apodData} />}
       {marsData && <MarsFigure marsData={marsData} />}
     </>

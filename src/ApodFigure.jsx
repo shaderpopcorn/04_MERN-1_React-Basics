@@ -17,6 +17,7 @@ const ApodFigure = ({ apodData }) => {
         <p>Date: {apodData.date}</p>
       </div>
       <div className="explanation">
+        <h3>Explanation</h3>
         <p>{apodData.explanation}</p>
       </div>
     </div>
