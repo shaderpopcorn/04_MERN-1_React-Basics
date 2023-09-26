@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import ApodFigure from "./ApodFigure";
+import MarsFigure from "./MarsFigure";
 import "./App.css";
 
 function App() {
@@ -11,6 +13,7 @@ function App() {
 
   useEffect(() => {
     if (select === "apod") {
+      setMarsData(null);
       (async () => {
         try {
           const res = await fetch(
@@ -20,7 +23,6 @@ function App() {
           );
           const data = await res.json();
           setApodData(data);
-          console.log(data);
         } catch (error) {
           console.error("Not able to fetch APOD data", error);
         }
@@ -28,6 +30,7 @@ function App() {
     }
 
     if (select === "mars") {
+      setApodData(null);
       (async () => {
         try {
           const res = await fetch(
@@ -38,8 +41,7 @@ function App() {
             }&earth_date=${date}`
           );
           const data = await res.json();
-          setMarsData(data);
-          console.log(data.photos[0]);
+          setMarsData(data.photos[0]);
         } catch (error) {
           console.error("Not able to fetch APOD data", error);
         }
@@ -57,9 +59,9 @@ function App() {
 
   return (
     <>
-      <h1>Hello World</h1>
+      <h1>Astronomical Picture of the Day</h1>
       <form action="">
-        <input type="date" value={date} onChange={handleInput} />
+        <input type="date" value={date} max={today} onChange={handleInput} />
         <br />
         <select name="planet-select" id="planet-select" onInput={handleSelect}>
           <option selected="selected" value="apod">
@@ -68,6 +70,9 @@ function App() {
           <option value="mars">MARS</option>
         </select>
       </form>
+      <p>This image corresponds to the date: {date}</p>
+      {apodData && <ApodFigure apodData={apodData} />}
+      {marsData && <MarsFigure marsData={marsData} />}
     </>
   );
 }
