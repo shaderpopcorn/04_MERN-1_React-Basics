@@ -7,7 +7,7 @@
 }
 
 .image {
-  border: 1px solid rgba(255, 255, 255, 1);
+  border: 2px solid rgba(255, 255, 255, 1);
   border-radius: 1rem;
   overflow: hidden;
 }
@@ -16,7 +16,7 @@
   margin: 1rem 0;
   display: flex;
   justify-content: space-between;
-  border: 1px solid rgba(255, 255, 255, 1);
+  border: 2px solid rgba(255, 255, 255, 1);
   border-radius: 1rem;
 }
 
@@ -25,7 +25,7 @@
 }
 
 .explanation {
-  border: 1px solid rgba(255, 255, 255, 1);
+  border: 2px solid rgba(255, 255, 255, 1);
   border-radius: 1rem;
 }
 
